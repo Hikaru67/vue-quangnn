@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>Title</title>
+</head>
+<body>
+    <div id="login">
+        <h1 v-show="haha">Hello!</h1>
+
+        <template v-if="loginType === 'username'">
+            <label>Username</label>
+            <label>
+                <input placeholder="Enter your username">
+            </label>
+            <button @click="loginType = 'email'">Switch</button>
+        </template>
+        <template v-else>
+            <label>Email</label>
+            <label>
+                <input placeholder="Enter your email address">
+            </label>
+            <button @click="loginType = 'username'">Switch</button>
+        </template>
+
+    </div>
+
+    <script>
+        new Vue({
+            el: '#login',
+            data: {
+                haha: false,
+                loginType: 'username'
+            },
+        })
+    </script>
+</body>
+</html>

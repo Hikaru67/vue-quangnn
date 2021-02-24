@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <title>Title</title>
+</head>
+<body>
+        <div id="lol" class="static" v-bind:style="styleObject" v-bind:class="{ active: isActive, 'text-danger': hasError }">hah</div>
+    <div id="lol2" v-bind:class="classObject"></div>
+    <div id="lol3" v-bind:class="classObject" v-bind:style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }">asd</div>
+    <div id="lol4" v-bind:class="[{ active: isActive }, hasError]">dasd</div>
+    <div id="lol5"><my-component class="baz boo"></my-component></div>
+
+
+    <script>
+        new Vue({
+            el: '#lol',
+            data: {
+                isActive: true,
+                hasError: false,
+                styleObject: {
+                    color: 'red',
+                    fontSize: '23px'
+                }
+            },
+            computed: {
+                classObject: function (){
+                    return {
+                        active: this.isActive && !this.error,
+                        'text-danger': this.error && this.error.type === 'fatal'
+                    }
+                }
+            }
+        })
+
+        new Vue({
+            el: '#lol2',
+            data: {
+                classObject:{
+                    active: true,
+                    'text-danger': false
+                }
+            }
+        })
+
+        new Vue({
+            el: '#lol3',
+            data: {
+                isActive: true,
+                error: null
+            },
+            computed: {
+                classObject: function (){
+                    return {
+                        active: this.isActive && !this.error,
+                        'text-danger': this.error && this.error.type === 'fatal'
+                    }
+                }
+            }
+        })
+
+        new Vue({
+            el: '#lol4',
+            data: {
+                isActive: true,
+                hasError: false
+            },
+            computed: {
+                classObject: function (){
+                    return {
+                        active: this.isActive && !this.error,
+                        'text-danger': this.error && this.error.type === 'fatal'
+                    }
+                }
+            }
+        })
+
+        Vue.component('my-component', {
+            template: '<p class="foo bar">Hi</p>'
+        })
+
+        new Vue({
+            el: '#lol5',
+        })
+    </script>
+</body>
+</html>
