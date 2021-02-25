@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <title>Dynamic & Async Components</title>
+</head>
+<body>
+    <div id="dynamic-component-demo" class="demo">
+        <component1 v-bind:is="currentTabComponent"></component1>
+
+        <button class="dynamic-component-demo-tab-button" @click="changeComp">Posts</button>
+        <button class="dynamic-component-demo-tab-button">Archive</button>
+
+
+    </div>
+
+    <script>
+        Vue.component('component1', {
+            template: `<div class="dynamic-component-demo-posts-tab dynamic-component-demo-tab">
+                <ul class="dynamic-component-demo-posts-sidebar">
+                    <li class="">          Cat Ipsum        </li>
+                    <li class="">          Hipster Ipsum        </li>
+                    <li class="">          Cupcake Ipsum        </li>
+                </ul>
+                <div class="dynamic-component-demo-post-container">
+                    <strong>          Click on a blog title to the left to view it.        </strong>
+                </div>
+            </div>`
+        })
+        Vue.component('component2', {
+            template: `<div class="dynamic-component-demo-tab">Archive component</div>`
+        })
+        new Vue({
+            el: '#dynamic-component-demo',
+            data: {
+                currentTabComponent: 1
+            },
+            methods: {
+                changeComp: function (){
+                    this.currentTabComponent = component2;
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

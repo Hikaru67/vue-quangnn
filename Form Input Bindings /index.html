@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <title>Title</title>
+</head>
+<body>
+    <div id="test">
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkedNames">
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+        <label for="mike">Mike</label>
+        <br>
+        <span>Checked names: {{ checkedNames }}</span>
+        <br>
+        <label>
+            <select v-model="selected" multiple>
+                <option disabled value="">Please select one</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+            </select>
+        </label>
+        <span>Selected: {{ selected }}</span>
+
+        <br>
+
+        <label>
+            <select v-model="selected">
+                <option v-for="option in options" v-bind:value="option.value">
+                    {{ option.text }}
+                </option>
+            </select>
+        </label>
+        <span>Selected: {{ selected }}</span>
+
+        <br>
+
+        <label>
+            <select v-model="selected">
+                <!-- inline object literal -->
+                <option v-bind:value="{ number: 123 }">123</option>
+            </select>
+        </label>
+
+        <label>
+            <input v-model.number="age" type="number">
+            <span>Age: {{ age }}</span>
+        </label>
+
+    </div>
+
+
+
+    <script>
+        let vm = new Vue({
+            el: '#test',
+            data: {
+                checkedNames: [],
+                selected: '',
+                age: null,
+                options: [
+                    { text: 'One', value: 'A' },
+                    { text: 'Two', value: 'B' },
+                    { text: 'Three', value: 'C' }
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

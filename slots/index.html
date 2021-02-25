@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <title>slots</title>
+</head>
+<body>
+    <div class="container">
+
+    </div>
+    <div id="test">
+        <mom></mom>
+        <son></son>
+    </div>
+
+    <script>
+        Vue.component('mom', {
+            template: `<div class="card">
+                <div class="card-header">
+                  <slot name="image">
+                    <img class="ava" src="https://i.pravatar.cc/150?img=35" alt="Avatar">
+                  </slot>
+                </div>
+                <div class="card-body">
+                  <slot name="name">Tao la me day.</slot>
+                </div>
+              </div>`
+        })
+
+        Vue.component('son', {
+            template: `
+                <div id="app" class="container">
+                    <test>
+                      <template slot="image">Đây là tên con, your handsome son ✌🏼</template>
+
+                      <template slot="name">
+                        Đây là ảnh của con, your handsome son ✌🏼
+                        <img height="150" width="150" src="https://i.pravatar.cc/150?img=2" alt="Avatar">
+                      </template>
+
+                    </test>
+                  </div>
+            `
+        })
+
+        new Vue({
+            el: '#test'
+        })
+    </script>
+</body>
+</html>

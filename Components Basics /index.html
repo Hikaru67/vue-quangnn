@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <title>Components Basics</title>
+</head>
+<body>
+    <div id="components-demo">
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+    </div>
+    <br>
+    <div id="blog-post-demo">
+<!--        <blog-post
+                v-for="post in posts"
+                v-bind:key="post.id"
+                v-bind:title="post.title"
+        ></blog-post>-->
+        <br>
+
+        <blog-post
+            v-for="post in posts"
+            v-bind:key="post.id"
+            v-bind:post="post"
+        ></blog-post>
+    </div>
+
+    <div id="blog-posts-events-demo">
+        <div :style="{ fontSize: postFontSize + 'em' }">
+            <blog-post
+                    v-for="post in posts"
+                    v-bind:key="post.id"
+                    v-bind:post="post"
+                    v-on:enlarge-text="onEnlargeText"
+            ></blog-post>
+        </div>
+    </div>
+
+    <div id="search">
+        <custom-input v-model="searchText"></custom-input>
+    </div>
+
+    <div id="alert">
+        <alert-box>
+            Something bad happened.
+        </alert-box>
+    </div>
+
+    <script>
+        // Define a new component called button-counter
+        Vue.component('button-counter', {
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+        })
+
+        new Vue({ el: '#components-demo' })
+
+        Vue.component('blog-post', {
+            props: ['title'],
+            template: '<h3>{{ title }}</h3>'
+        })
+
+        Vue.component('blog-post', {
+            props: ['post'],
+            template: `
+            <div class="blog-post">
+              <h3>{{ post.title }}</h3>
+              <div v-html="post.content"></div>
+            </div>
+          `
+        })
+
+        Vue.component('blog-post', {
+            props: ['post'],
+            template: `
+                <div class="blog-post">
+                  <h3>{{ post.title }}</h3>
+                  <button v-on:click="$emit('enlarge-text', 0.1)">
+                    Enlarge text
+                  </button>
+                  <div v-html="post.content"></div>
+                </div>
+              `
+        })
+
+        let vm = new Vue({
+            el: '#blog-posts-events-demo',
+            data: {
+                posts: [
+                    { id: 1, title: 'My journey with Vue' , content: 'hahaha'},
+                    { id: 2, title: 'Blogging with Vue', content: 'hahaha' },
+                    { id: 3, title: 'Why Vue is so fun', content: 'hahaha' }
+                ],
+                postFontSize: 1
+            },
+            methods: {
+                onEnlargeText: function (enlargeAmount) {
+                    this.postFontSize += enlargeAmount
+                }
+            }
+        })
+
+        /*new Vue({
+            el: '#blog-post-demo',
+            data: {
+                posts: [
+                    { id: 1, title: 'My journey with Vue' , content: 'hahaha'},
+                    { id: 2, title: 'Blogging with Vue', content: 'hahaha' },
+                    { id: 3, title: 'Why Vue is so fun', content: 'hahaha' }
+                ],
+            }
+        })*/
+        Vue.component('custom-input', {
+            props: ['value'],
+            template: `
+                <input
+                  v-bind:value="value"
+                  v-on:input="$emit('input', $event.target.value)"
+                >
+              `
+        })
+
+        let vm2 = new Vue({
+            el: '#search',
+            data: {
+                searchText: ''
+            }
+        })
+
+        Vue.component('alert-box', {
+            template: `
+                <div class="demo-alert-box">
+                  <strong>Error!</strong>
+                  <slot></slot>
+                </div>
+              `
+        })
+
+        let vm3 = new Vue({el: '#alert'})
+
+    </script>
+</body>
+</html>

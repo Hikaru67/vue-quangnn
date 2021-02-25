@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <title>Props</title>
+</head>
+<body>
+    <div id="app">
+        <p>
+            <label>
+                <input type="text" v-model="message">
+            </label>
+        </p>
+        <child v-bind:my-say="message"></child>
+    </div>
+    <br>
+    <div id="app2">
+        <child2 my-say2="Hello!"></child2>
+    </div>
+    <br>
+    <div id="app3">
+        <base-input
+                label="Username:"
+                v-model="username"
+                required
+                placeholder="Enter your username"
+        ></base-input>
+    </div>
+
+    <script type="text/javascript">
+        Vue.component('child', {
+            props: ['mySay'],
+            template: '<h1>{{ mySay }}</h1>',
+
+        });
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message : null
+            }
+        });
+
+        Vue.component('child2', {
+            props: ['mySay2'],
+            data : function () {
+                return { dataSay : this.mySay2 + " This is dataSay!"};
+            },
+            computed: {
+                normalizedSize: function () {
+                    return this.mySay2.trim().toLowerCase()
+                }
+            },
+
+            template: '<h1>{{ dataSay }}: {{normalizedSize}}</h1>',
+
+        });
+        var app2 = new Vue({
+            el: '#app2',
+        });
+
+        Vue.component('base-input', {
+            inheritAttrs: false,
+            props: ['label', 'value'],
+            template: `
+                <label>
+                  {{ label }}
+                  <input
+                    v-bind="$attrs"
+                    v-bind:value="value"
+                    v-on:input="$emit('input', $event.target.value)"
+                  >
+                </label>
+              `
+        })
+        //Disabling Attribute Inheritance
+
+        new Vue({
+            el: '#app3',
+            data: {
+                username: ''
+            }
+        })
+    </script>
+</body>
+</html>
