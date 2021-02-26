@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <title>Plugin</title>
+</head>
+<body>
+
+    <div id="app">
+        <h1>{{title}}</h1>
+
+        <div class="selected">
+            Selected: {{selected}}
+        </div>
+        <div class="select-wrapper">
+            <vue-select2 :options='select2' v-model="selected"></vue-select2>
+        </div>
+        <button type="button" @click="addOption">Add option</button>
+        <button type="button" @click="randSelect">Select random</button>
+    </div>
+
+    <script type="text/x-template" id="template-select2">
+        <label>
+            <select class="vue-select2">
+                <option v-for="option in options"
+                        :value="option.key"
+                        :selected="option.key=== selected">{{option.value}}</option>
+            </select>
+        </label>
+    </script>
+
+    <script src="main.js"></script>
+</body>
+</html>

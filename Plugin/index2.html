@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <title>Title</title>
+</head>
+<body>
+    <template>
+        <div class="notifications">
+            <button @click="$_vuenotie_success('Success!')">Success</button>
+            <button @click="$_vuenotie_warning('Warning!')">Warning</button>
+            <button @click="$_vuenotie_error('Error!')">Error</button>
+            <button @click="$_vuenotie_infor('Information!')">Information</button>
+        </div>
+    </template>
+
+    <script >
+        var  VueNotie = require('vue-notie');
+        Vue.use(VueNotie);
+    </script>
+</body>
+</html>
